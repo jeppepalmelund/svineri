@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Landbrugsstøtte-beregner (2024)</title>
+  <title>Så meget betaler du til animalsk kødproduktion (2024)</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -66,10 +66,11 @@
 </head>
 <body>
   <div class="card">
-    <h1>Landbrugsstøtte-beregner (2024-niveau)</h1>
+    <h1>Så meget betaler du til animalsk kødproduktion (2024-niveau)</h1>
     <p>
       Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte bidrager til
-      landbrugsstøtte, statslige udgifter, skattemæssige fordele og miljøskader forårsaget af animalsk produktion.
+      animalsk kødproduktion gennem landbrugsstøtte, statslige udgifter, skattemæssige fordele og
+      de økonomiske omkostninger ved natur- og klimaskader forårsaget af denne sektor.
     </p>
 
     <label>Din årlige indkomst før skat (DKK)
@@ -84,13 +85,13 @@
     <div class="infobox">
       <h3>Baggrund (2024-niveau)</h3>
       <p>
-        Samlet dansk landbrugsstøtte: <strong>7 mia. kr.</strong>  
-        Statlige udgifter relateret til landbrug (miljø, kompensation, infrastruktur): <strong>15 mia. kr.</strong>  
-        Skattefordele og afskrivningsregler: <strong>5,5 mia. kr.</strong>  
+        Samlet dansk landbrugsstøtte: <strong>7 mia. kr.</strong><br>
+        Statlige udgifter relateret til landbrug (miljø, kompensation, infrastruktur): <strong>15 mia. kr.</strong><br>
+        Skattefordele og afskrivningsregler: <strong>5,5 mia. kr.</strong><br>
         Økonomisk værdi af natur- og klimaskader: <strong>30 mia. kr.</strong>
       </p>
       <p>
-        Omkring <strong>82 %</strong> af alle støtteelementer og miljøskader tilskrives <em>animalsk produktion</em>.
+        Omkring <strong>82 %</strong> af alle støtteelementer og miljøskader kan tilskrives <em>animalsk produktion</em>.
         Beregningen tager udgangspunkt i ca. <strong>4,6 mio. skatteydere</strong> i Danmark.
       </p>
     </div>
@@ -98,16 +99,17 @@
     <div class="infobox warning">
       <h3>Negative følgevirkninger af animalsk produktion</h3>
       <ul>
-        <li><strong>30–35 %</strong> af Danmarks samlede drivhusgasudledning.</li>
-        <li>Omkring <strong>90 %</strong> af landbrugsarealet bruges til foderproduktion.</li>
-        <li><strong>Ammoniakudslip</strong> bidrager til naturforarmelse og helbredsproblemer.</li>
-        <li><strong>Nitrat og fosfor</strong> fra gødning fører til iltsvind i fjorde og havområder.</li>
-        <li><strong>Skovrydning</strong> i Sydamerika forbundet med import af soja til foder.</li>
+        <li><strong>30–35 %</strong> af Danmarks samlede drivhusgasudledning stammer fra husdyrproduktion.</li>
+        <li>Omkring <strong>90 %</strong> af landbrugsarealet bruges til foderproduktion i stedet for fødevarer direkte til mennesker.</li>
+        <li><strong>Ammoniakudslip</strong> fører til forringet luftkvalitet og tab af biodiversitet.</li>
+        <li><strong>Nitrat og fosfor</strong> fra gødning forårsager iltsvind og forurenet drikkevand.</li>
+        <li><strong>Skovrydning</strong> i Sydamerika skyldes import af soja til foder.</li>
         <li>Høj antibiotikaanvendelse øger risikoen for <strong>resistente bakterier</strong>.</li>
       </ul>
       <p>
-        Økonomiske analyser (bl.a. fra DCE, CONCITO og Miljøstyrelsen) vurderer, at miljøskader fra landbruget
-        samlet koster samfundet omkring <strong>30 mia. kr. årligt</strong> – hovedsageligt fra animalsk produktion.
+        Økonomiske analyser fra bl.a. <em>CONCITO, DCE (Aarhus Universitet) og Miljøstyrelsen</em> vurderer,
+        at miljø- og klimaskader fra dansk landbrug samlet koster samfundet omkring
+        <strong>30 mia. kr. årligt</strong> – hovedsageligt fra animalsk produktion.
       </p>
     </div>
   </div>
@@ -142,7 +144,7 @@
       <p>Samlet støtte, udgifter og miljøskader: <strong>${formatDKK(total_support)}</strong></p>
       <p>Heraf relateret til animalsk produktion (82 %): <strong>${formatDKK(animal_support)}</strong></p>
       <p>Din andel: <strong>${formatDKK(support_per_taxpayer)}</strong></p>
-      <p>Heraf animalsk produktion: <strong>${formatDKK(animal_support_per_taxpayer)}</strong>
+      <p>Heraf til animalsk produktion: <strong>${formatDKK(animal_support_per_taxpayer)}</strong>
       (<strong>${pct_income.toFixed(3)} %</strong> af din årlige indkomst)</p>
     `;
 
@@ -164,7 +166,7 @@
           legend: { display: false },
           title: {
             display: true,
-            text: 'Samlet økonomisk påvirkning fra dansk landbrug (2024-niveau)'
+            text: 'Samlet økonomisk påvirkning fra dansk animalsk kødproduktion (2024-niveau)'
           }
         },
         scales: {
