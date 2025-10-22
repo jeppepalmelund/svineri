@@ -1,113 +1,3 @@
-<!doctype html>
-<html lang="da">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Så meget betaler du til animalsk kødproduktion</title>
-  <style>
-    body {
-      font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: #f7fafc;
-      color: #0f172a;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(2,6,23,0.08);
-      padding: 18px;
-      max-width: 800px;
-      margin: 16px auto;
-    }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: 600;
-    }
-    input[type=number] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #e6e9ef;
-      border-radius: 8px;
-      margin-top: 6px;
-    }
-    button {
-      margin-top: 14px;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 0;
-      background: #0ea5a4;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .result {
-      background: #f1f5f9;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 12px;
-    }
-    .infobox {
-      background: #ecfeff;
-      border-left: 4px solid #06b6d4;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-top: 16px;
-    }
-    .sources {
-      background: #f9fafb;
-      padding: 16px;
-      border-radius: 8px;
-      margin-top: 30px;
-      font-size: 0.95em;
-    }
-    canvas {
-      margin-top: 20px;
-      width: 100%;
-      max-width: 700px;
-      height: 400px;
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Så meget betaler du til animalsk kødproduktion</h1>
-    <p>Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte bidrager til økonomisk støtte af den animalske landbrugssektor i Danmark (2024-niveau), herunder direkte landbrugsstøtte, statslige udgifter og skattemæssige fordele. Derudover vises de samfundsøkonomiske skader, som den animalske produktion medfører.</p>
-
-    <label>Din årlige indkomst før skat (DKK)
-      <input id="income" type="number" value="500000" min="0" step="1000">
-    </label>
-
-    <button id="calc">Beregn</button>
-
-    <div id="output" class="result" aria-live="polite" hidden></div>
-
-    <div class="infobox">
-      <h3>Om lavere skattetryk og støtte</h3>
-      <p>Den animalske landbrugssektor modtager årligt betydelig økonomisk støtte gennem EU’s landbrugsstøtte (ca. 7 mia. kr.), statslige udgifter (ca. 15 mia. kr.) og særlige skattemæssige fradrag (ca. 5–6 mia. kr.). Samlet svarer det til omkring 27 mia. kr. årligt i direkte og indirekte støtte, hvoraf ca. 82 % går til animalsk produktion. Landbruget har generelt et lavere effektivt skattetryk end andre erhverv, hvilket yderligere øger den samfundsøkonomiske støtte.</p>
-    </div>
-
-    <div class="infobox">
-      <h3>Miljø- og klimapåvirkning</h3>
-      <p>De samlede økonomiske skader på natur, klima og biodiversitet fra landbruget anslås til mellem 27 og 35 mia. kr. årligt (DCE, Klimarådet, CONCITO). Omkring 80–90 % af disse skader stammer fra animalsk produktion — især kvæg- og svinesektoren. Skaderne omfatter udledning af drivhusgasser, kvælstofforurening, tab af biodiversitet og påvirkning af menneskers sundhed via luftforurening.</p>
-    </div>
-
-    <canvas id="chart"></canvas>
-
-    <section class="sources">
-      <h3>Kilder og data (2024-niveau)</h3>
-      <ul>
-        <li>Ministeriet for Fødevarer, Landbrug og Fiskeri – <a href="https://agridata.ec.europa.eu/extensions/CAP/CAP.html" target="_blank">EU CAP Data Portal</a></li>
-        <li>Klimarådet (2024): <em>Danmark som grønt foregangsland?</em></li>
-        <li>CONCITO (2024): <em>Klimadatabogen</em></li>
-        <li>De Økonomiske Råd (2023): <em>Miljøøkonomisk vismandsrapport</em></li>
-        <li>Aarhus Universitet, DCE (2023): <em>Landbrugets miljøpåvirkning</em></li>
-        <li>Danmarks Statistik (2024): <a href="https://www.statistikbanken.dk" target="_blank">Statistikbanken</a></li>
-      </ul>
-    </section>
-  </div>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   function formatDKK(n){
@@ -115,28 +5,35 @@
   }
 
   document.getElementById('calc').addEventListener('click',()=>{
+
     const income = Number(document.getElementById('income').value)||0;
-    const taxpayers = 4600000;
 
-    const direct_support = 7000000000;
-    const state_expenses = 15000000000;
-    const tax_benefits = 5500000000;
-    const environmental_damage = 30000000000;
+    // Data
+    const total_support = 7000000000 + 15000000000 + 5500000000; // Landbrugsstøtte + stat + skattefordel
+    const environmental_damage = 30000000000; // Miljø og klima
 
-    const total_support = direct_support + state_expenses + tax_benefits;
-    const total_cost = total_support + environmental_damage;
+    // Samlet skattepligtig indkomst i DK 2024 (estimat)
+    const total_income = 2300000000000;
 
-    const per_taxpayer_support = total_support / taxpayers;
-    const per_taxpayer_env = environmental_damage / taxpayers;
-    const total_pct_income = income>0 ? ((per_taxpayer_support + per_taxpayer_env)/income)*100 : 0;
+    // Beregn andel af indkomst
+    const income_share = income / total_income;
 
+    // Din andel af støtte og miljøomkostninger
+    const din_andel_support = total_support * income_share;
+    const din_andel_env = environmental_damage * income_share;
+    const din_andel_total = din_andel_support + din_andel_env;
+
+    // Andel i procent af din indkomst
+    const total_pct_income = income>0 ? (din_andel_total/income)*100 : 0;
+
+    // Vis resultat
     const out = document.getElementById('output');
     out.hidden = false;
     out.innerHTML = `
       <h3>Resultat</h3>
       <p>Samlet støtte til animalsk landbrug: <strong>${formatDKK(total_support)}</strong></p>
       <p>Miljø- og klimapåvirkning (økonomisk værdi): <strong>${formatDKK(environmental_damage)}</strong></p>
-      <p>Din andel: <strong>${formatDKK(per_taxpayer_support + per_taxpayer_env)}</strong> (<strong>${total_pct_income.toFixed(2)} %</strong> af din indkomst)</p>
+      <p>Din andel: <strong>${formatDKK(din_andel_total)}</strong> (<strong>${total_pct_income.toFixed(2)} %</strong> af din indkomst)</p>
     `;
 
     // Chart
@@ -164,5 +61,3 @@
     });
   });
 </script>
-</body>
-</html>
