@@ -9,7 +9,7 @@
   .card { background: white; border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.08); padding: 18px; max-width: 800px; margin: 16px auto; }
   label { display:block; margin-top:12px; font-weight:600; }
   input[type=number] { width:100%; padding:8px; border:1px solid #e6e9ef; border-radius:8px; margin-top:6px; }
-  button { margin-top:10px; padding:10px 14px; border-radius:10px; border:0; background:#0ea5a4; color:white; font-weight:600; cursor:pointer; }
+  button { margin-top:10px; padding:10px 14px; border-radius:10px; border:0; background:#0ea5a4; color:white; font-weight:600; cursor:pointer; display:block; }
   .result { background:#f1f5f9; padding:12px; border-radius:8px; margin-top:12px; }
   .infobox { background:#ecfeff; border-left:4px solid #06b6d4; padding:12px 16px; border-radius:8px; margin-top:16px; }
   .sources { background:#f9fafb; padding:16px; border-radius:8px; margin-top:30px; font-size:0.95em; }
@@ -21,9 +21,8 @@
   <h1>Så meget betaler du til animalsk kødproduktion</h1>
   <p>Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte bidrager til økonomisk støtte af den animalske landbrugssektor i Danmark (2024-niveau), samt de samfundsøkonomiske skader.</p>
 
-  <label>Din årlige indkomst før skat (DKK)
-    <input id="income" type="number" value="500000" min="0" step="1000">
-  </label>
+  <label for="income">Din årlige indkomst før skat (DKK)</label>
+  <input id="income" type="number" value="500000" min="0" step="1000">
 
   <button id="calc">Beregn</button>
 
@@ -41,6 +40,8 @@
     <h3>Miljø- og klimapåvirkning</h3>
     <p>De samlede økonomiske skader på natur, klima og biodiversitet fra landbruget anslås til mellem 27 og 35 mia. kr. årligt. Omkring 80–90 % stammer fra animalsk produktion.</p>
   </div>
+
+  <div id="output" class="result" aria-live="polite" hidden></div>
 
   <canvas id="chart"></canvas>
 
