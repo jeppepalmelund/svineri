@@ -36,12 +36,12 @@
 
   <div class="infobox">
     <h3>Om lavere skattetryk og støtte</h3>
-    <p>Den animalske landbrugssektor modtager årligt betydelig økonomisk støtte gennem EU’s landbrugsstøtte (ca. 7 mia. kr.), statslige udgifter (ca. 15 mia. kr.) og særlige skattemæssige fradrag (ca. 5–6 mia. kr.). Samlet svarer det til omkring 27 mia. kr. årligt i direkte og indirekte støtte, hvoraf ca. 82 % går til animalsk produktion.</p>
+    <p>Den animalske landbrugssektor modtager årligt betydelig økonomisk støtte gennem EU’s landbrugsstøtte (ca. 7 mia. kr.), statslige udgifter (ca. 15 mia. kr.) og særlige skattemæssige fradrag (ca. 5–6 mia. kr.). Samlet svarer det til omkring 27 mia. kr. årligt i direkte og indirekte støtte, hvoraf ca. 82 % går til animalsk produktion.</p>
   </div>
 
   <div class="infobox">
     <h3>Miljø- og klimapåvirkning</h3>
-    <p>De samlede økonomiske skader på natur, klima og biodiversitet fra landbruget anslås til mellem 27 og 35 mia. kr. årligt. Omkring 80–90 % stammer fra animalsk produktion — især kvæg- og svinesektoren.</p>
+    <p>De samlede økonomiske skader på natur, klima og biodiversitet fra landbruget anslås til mellem 27 og 35 mia. kr. årligt. Omkring 80–90 % stammer fra animalsk produktion — især kvæg- og svinesektoren.</p>
   </div>
 
   <canvas id="chart"></canvas>
@@ -50,11 +50,12 @@
     <h3>Kilder og data (2024-niveau)</h3>
     <ul>
       <li>Ministeriet for Fødevarer, Landbrug og Fiskeri – <a href="https://agridata.ec.europa.eu/extensions/CAP/CAP.html" target="_blank">EU CAP Data Portal</a></li>
-      <li>Klimarådet (2024)</li>
-      <li>CONCITO (2024)</li>
-      <li>De Økonomiske Råd (2023)</li>
-      <li>Aarhus Universitet, DCE (2023)</li>
-      <li>Danmarks Statistik (2024)</li>
+      <li>Klimarådet (2024): <em>Danmark som grønt foregangsland?</em></li>
+      <li>CONCITO (2024): <em>Klimadatabogen</em></li>
+      <li>De Økonomiske Råd (2023): <em>Miljøøkonomisk vismandsrapport</em></li>
+      <li>Aarhus Universitet, DCE (2023): <em>Landbrugets miljøpåvirkning</em></li>
+      <li>Danmarks Statistik (2024): <a href="https://www.statistikbanken.dk" target="_blank">Statistikbanken</a></li>
+      <li>Skattestyrelsen (2023): <a href="https://sktst.dk/media/turdqlr4/danskernes-skattebetaling-2023.pdf" target="_blank">Danskernes skattebetaling</a></li>
     </ul>
   </section>
 </div>
@@ -88,7 +89,7 @@ document.getElementById('calc').addEventListener('click', function() {
     <h3>Resultat</h3>
     <p>Samlet støtte til animalsk landbrug: <strong>${formatDKK(total_support)}</strong></p>
     <p>Miljø- og klimapåvirkning (økonomisk værdi): <strong>${formatDKK(environmental_damage)}</strong></p>
-    <p>Din andel: <strong>${formatDKK(din_andel)}</strong> (<strong>${total_pct_income.toFixed(2)} %</strong> af din indkomst)</p>
+    <p>Din andel: <strong>${formatDKK(din_andel)}</strong> (<strong>${total_pct_income.toFixed(2)} %</strong> af din indkomst)</p>
   `;
 
   const ctx = document.getElementById('chart').getContext('2d');
