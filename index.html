@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Landbrugsstøtte-beregner (2024)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -17,7 +18,7 @@
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(2,6,23,0.08);
       padding: 18px;
-      max-width: 800px;
+      max-width: 900px;
       margin: 16px auto;
     }
     label { display: block; margin-top: 12px; font-weight: 600 }
@@ -51,15 +52,24 @@
       border-radius: 8px;
       margin-top: 16px;
     }
+    .infobox.warning {
+      background: #fff7ed;
+      border-left-color: #ea580c;
+    }
+    canvas {
+      margin-top: 16px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>Landbrugsstøtte-beregner (2024-niveau)</h1>
     <p>
-      Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte
-      betaler til landbrugsstøtte, statslige udgifter og skattemæssige fordele relateret til animalsk produktion
-      (herunder svin, kvæg og fjerkræ). Tallene bygger på et samlet støtte- og fradragsniveau for Danmark i 2024.
+      Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte bidrager til
+      landbrugsstøtte, statslige udgifter, skattemæssige fordele og miljøskader forårsaget af animalsk produktion.
     </p>
 
     <label>Din årlige indkomst før skat (DKK)
@@ -69,32 +79,36 @@
     <button id="calc">Beregn</button>
 
     <div id="output" class="result" aria-live="polite" hidden></div>
+    <canvas id="supportChart" width="600" height="300"></canvas>
 
     <div class="infobox">
       <h3>Baggrund (2024-niveau)</h3>
       <p>
-        Samlet dansk landbrugsstøtte udgør ca. <strong>7 mia. kr.</strong> årligt.
-        Derudover skønnes statslige udgifter (bl.a. miljøkompensation, infrastruktur og støtteordninger)
-        at udgøre ca. <strong>15 mia. kr.</strong>.
-        Omkring <strong>82 %</strong> af al støtte går til <em>animalsk produktion</em>.
+        Samlet dansk landbrugsstøtte: <strong>7 mia. kr.</strong>  
+        Statlige udgifter relateret til landbrug (miljø, kompensation, infrastruktur): <strong>15 mia. kr.</strong>  
+        Skattefordele og afskrivningsregler: <strong>5,5 mia. kr.</strong>  
+        Økonomisk værdi af natur- og klimaskader: <strong>30 mia. kr.</strong>
       </p>
       <p>
-        Landbruget har samtidig et lavere effektivt skattetryk end gennemsnittet for øvrige erhverv,
-        bl.a. på grund af særlige fradrag, lavere ejendomsskat og gunstige afskrivningsregler.
-        Dette anslås at udgøre yderligere <strong>5–6 mia. kr.</strong> i indirekte støtte.
+        Omkring <strong>82 %</strong> af alle støtteelementer og miljøskader tilskrives <em>animalsk produktion</em>.
+        Beregningen tager udgangspunkt i ca. <strong>4,6 mio. skatteydere</strong> i Danmark.
       </p>
     </div>
 
-    <div class="infobox" style="background:#fff7ed;border-left-color:#ea580c;">
+    <div class="infobox warning">
       <h3>Negative følgevirkninger af animalsk produktion</h3>
       <ul>
-        <li>Omkring <strong>90 %</strong> af Danmarks landbrugsareal bruges til foderproduktion.</li>
-        <li>Animalsk produktion står for over <strong>30 %</strong> af Danmarks samlede drivhusgasudledning.</li>
-        <li>Højt ammoniakudslip fører til <strong>tab af biodiversitet</strong> og forringet naturkvalitet.</li>
-        <li>Store <strong>nitrat- og fosforudledninger</strong> belaster vandmiljøet og bidrager til iltsvind.</li>
-        <li>Massiv import af soja til foderproduktion er forbundet med <strong>skovrydning</strong> i Sydamerika.</li>
-        <li>Høj antibiotikaanvendelse i svineproduktionen øger risikoen for <strong>resistensudvikling</strong>.</li>
+        <li><strong>30–35 %</strong> af Danmarks samlede drivhusgasudledning.</li>
+        <li>Omkring <strong>90 %</strong> af landbrugsarealet bruges til foderproduktion.</li>
+        <li><strong>Ammoniakudslip</strong> bidrager til naturforarmelse og helbredsproblemer.</li>
+        <li><strong>Nitrat og fosfor</strong> fra gødning fører til iltsvind i fjorde og havområder.</li>
+        <li><strong>Skovrydning</strong> i Sydamerika forbundet med import af soja til foder.</li>
+        <li>Høj antibiotikaanvendelse øger risikoen for <strong>resistente bakterier</strong>.</li>
       </ul>
+      <p>
+        Økonomiske analyser (bl.a. fra DCE, CONCITO og Miljøstyrelsen) vurderer, at miljøskader fra landbruget
+        samlet koster samfundet omkring <strong>30 mia. kr. årligt</strong> – hovedsageligt fra animalsk produktion.
+      </p>
     </div>
   </div>
 
@@ -103,15 +117,19 @@
     return n.toLocaleString('da-DK',{style:'currency',currency:'DKK',maximumFractionDigits:0});
   }
 
+  const ctx = document.getElementById('supportChart').getContext('2d');
+  let chart;
+
   document.getElementById('calc').addEventListener('click',()=>{
     const income = Number(document.getElementById('income').value)||0;
     const total_subsidy = 7000000000; // 7 mia
     const state_spending = 15000000000; // 15 mia
     const tax_advantage = 5500000000; // 5,5 mia
-    const animal_share = 0.82; // 82 %
-    const taxpayers = 4600000; // ca. antal skatteydere
+    const env_damage = 30000000000; // 30 mia
+    const animal_share = 0.82;
+    const taxpayers = 4600000;
 
-    const total_support = total_subsidy + state_spending + tax_advantage;
+    const total_support = total_subsidy + state_spending + tax_advantage + env_damage;
     const animal_support = total_support * animal_share;
     const support_per_taxpayer = total_support / taxpayers;
     const animal_support_per_taxpayer = animal_support / taxpayers;
@@ -121,12 +139,44 @@
     out.hidden = false;
     out.innerHTML = `
       <h3>Resultat</h3>
-      <p>Samlet støtte, udgifter og skattelettelser til landbruget: <strong>${formatDKK(total_support)}</strong></p>
-      <p>Heraf til animalsk produktion (82 %): <strong>${formatDKK(animal_support)}</strong></p>
-      <p>Din andel af den samlede støtte: <strong>${formatDKK(support_per_taxpayer)}</strong></p>
-      <p>Heraf til animalsk produktion: <strong>${formatDKK(animal_support_per_taxpayer)}</strong>
+      <p>Samlet støtte, udgifter og miljøskader: <strong>${formatDKK(total_support)}</strong></p>
+      <p>Heraf relateret til animalsk produktion (82 %): <strong>${formatDKK(animal_support)}</strong></p>
+      <p>Din andel: <strong>${formatDKK(support_per_taxpayer)}</strong></p>
+      <p>Heraf animalsk produktion: <strong>${formatDKK(animal_support_per_taxpayer)}</strong>
       (<strong>${pct_income.toFixed(3)} %</strong> af din årlige indkomst)</p>
     `;
+
+    // Opdater eller opret diagram
+    const data = {
+      labels: ['Landbrugsstøtte', 'Statslige udgifter', 'Skattefordele', 'Miljøskader'],
+      datasets: [{
+        label: 'Milliarder DKK (2024)',
+        data: [7, 15, 5.5, 30],
+        backgroundColor: ['#0ea5a4', '#38bdf8', '#93c5fd', '#f87171']
+      }]
+    };
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Samlet økonomisk påvirkning fra dansk landbrug (2024-niveau)'
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: 'Milliarder DKK' },
+            beginAtZero: true
+          }
+        }
+      }
+    };
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, config);
   });
 </script>
 </body>
