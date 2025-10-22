@@ -1,29 +1,65 @@
 <!doctype html>
 <html lang="da">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Animalsk landbrugsstøtte – beregner 2024</title>
-<style>
-  body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f7fafc;color:#0f172a;padding:20px}
-  .card{background:white;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.08);padding:18px;max-width:800px;margin:16px auto}
-  label{display:block;margin-top:12px;font-weight:600}
-  input[type=number]{width:100%;padding:8px;border:1px solid #e6e9ef;border-radius:8px;margin-top:6px}
-  button{margin-top:14px;padding:10px 14px;border-radius:10px;border:0;background:#0ea5a4;color:white;font-weight:600;cursor:pointer}
-  .result{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:12px}
-  .infobox{background:#eef6ff;border-left:4px solid #0ea5a4;padding:12px;margin-top:12px;border-radius:8px}
-  .muted{color:#475569;font-size:0.9rem}
-  .kpi{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-  .kpi > div{flex:1;min-width:180px;background:white;padding:10px;border-radius:8px;box-shadow:0 2px 8px rgba(2,6,23,0.04)}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Landbrugsstøtte-beregner (2024)</title>
+  <style>
+    body {
+      font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: #f7fafc;
+      color: #0f172a;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.08);
+      padding: 18px;
+      max-width: 800px;
+      margin: 16px auto;
+    }
+    label { display: block; margin-top: 12px; font-weight: 600 }
+    input[type=number] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #e6e9ef;
+      border-radius: 8px;
+      margin-top: 6px;
+    }
+    button {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      background: #0ea5a4;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .result {
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+    .infobox {
+      background: #ecfdf5;
+      border-left: 6px solid #0ea5a4;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+  </style>
 </head>
 <body>
   <div class="card">
-    <h1>Animalsk landbrugsstøtte – beregner (2024)</h1>
+    <h1>Landbrugsstøtte-beregner (2024-niveau)</h1>
     <p>
-      Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte bidrager til
-      <strong>animalsk landbrugsproduktion</strong> gennem EU-støtte, statslige udgifter og skattemæssige fordele
-      – baseret på danske referencetal for <strong>året 2024</strong>.
+      Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte
+      betaler til landbrugsstøtte, statslige udgifter og skattemæssige fordele relateret til animalsk produktion
+      (herunder svin, kvæg og fjerkræ). Tallene bygger på et samlet støtte- og fradragsniveau for Danmark i 2024.
     </p>
 
     <label>Din årlige indkomst før skat (DKK)
@@ -35,84 +71,63 @@
     <div id="output" class="result" aria-live="polite" hidden></div>
 
     <div class="infobox">
-      <strong>Baggrund og metode:</strong>
-      <p class="muted">
-        Beregningen er baseret på følgende referencetal for Danmark i <strong>2024</strong>:
-        EU’s direkte landbrugsstøtte udgør ca. <strong>7 mia. kr.</strong>, mens de
-        <strong>statslige udgifter og skattemæssige støtteordninger</strong> anslås til omkring
-        <strong>15 mia. kr.</strong>. Forskning og rapporter fra EU og FAO estimerer, at omkring
-        <strong>82 %</strong> af støtten går til animalsk produktion
-        (herunder svin, kvæg, mejeri og foderproduktion).
+      <h3>Baggrund (2024-niveau)</h3>
+      <p>
+        Samlet dansk landbrugsstøtte udgør ca. <strong>7 mia. kr.</strong> årligt.
+        Derudover skønnes statslige udgifter (bl.a. miljøkompensation, infrastruktur og støtteordninger)
+        at udgøre ca. <strong>15 mia. kr.</strong>.
+        Omkring <strong>82 %</strong> af al støtte går til <em>animalsk produktion</em>.
       </p>
-      <p class="muted">
-        Antallet af skatteydere er sat til ca. <strong>4,6 mio.</strong> Resultaterne er
-        modelbaserede estimater og skal fortolkes som vejledende, ikke som nøjagtige
-        regnskabstal. Data bør sammenholdes med officielle kilder som
-        Finansministeriet, Danmarks Statistik og EU’s CAP-databaser for formel dokumentation.
+      <p>
+        Landbruget har samtidig et lavere effektivt skattetryk end gennemsnittet for øvrige erhverv,
+        bl.a. på grund af særlige fradrag, lavere ejendomsskat og gunstige afskrivningsregler.
+        Dette anslås at udgøre yderligere <strong>5–6 mia. kr.</strong> i indirekte støtte.
       </p>
+    </div>
+
+    <div class="infobox" style="background:#fff7ed;border-left-color:#ea580c;">
+      <h3>Negative følgevirkninger af animalsk produktion</h3>
+      <ul>
+        <li>Omkring <strong>90 %</strong> af Danmarks landbrugsareal bruges til foderproduktion.</li>
+        <li>Animalsk produktion står for over <strong>30 %</strong> af Danmarks samlede drivhusgasudledning.</li>
+        <li>Højt ammoniakudslip fører til <strong>tab af biodiversitet</strong> og forringet naturkvalitet.</li>
+        <li>Store <strong>nitrat- og fosforudledninger</strong> belaster vandmiljøet og bidrager til iltsvind.</li>
+        <li>Massiv import af soja til foderproduktion er forbundet med <strong>skovrydning</strong> i Sydamerika.</li>
+        <li>Høj antibiotikaanvendelse i svineproduktionen øger risikoen for <strong>resistensudvikling</strong>.</li>
+      </ul>
     </div>
   </div>
 
 <script>
-function formatDKK(n){
-  return Number(n).toLocaleString('da-DK',{style:'currency',currency:'DKK',maximumFractionDigits:0});
-}
+  function formatDKK(n){
+    return n.toLocaleString('da-DK',{style:'currency',currency:'DKK',maximumFractionDigits:0});
+  }
 
-document.getElementById('calc').addEventListener('click', ()=> {
-  const income = Number(document.getElementById('income').value) || 0;
+  document.getElementById('calc').addEventListener('click',()=>{
+    const income = Number(document.getElementById('income').value)||0;
+    const total_subsidy = 7000000000; // 7 mia
+    const state_spending = 15000000000; // 15 mia
+    const tax_advantage = 5500000000; // 5,5 mia
+    const animal_share = 0.82; // 82 %
+    const taxpayers = 4600000; // ca. antal skatteydere
 
-  // ---- Referencetal for 2024 ----
-  const eu_support = 7000000000;  // 7 mia. DKK
-  const state_support = 15000000000; // 15 mia. DKK
-  const eu_animals_share = 0.82;  // 82 %
-  const state_animals_share = 0.5; // ca. 50 % vurderet andel
-  const taxpayers = 4600000;
+    const total_support = total_subsidy + state_spending + tax_advantage;
+    const animal_support = total_support * animal_share;
+    const support_per_taxpayer = total_support / taxpayers;
+    const animal_support_per_taxpayer = animal_support / taxpayers;
+    const pct_income = income>0 ? (animal_support_per_taxpayer/income)*100 : 0;
 
-  // Beregninger
-  const eu_animals = eu_support * eu_animals_share;
-  const state_animals = state_support * state_animals_share;
-  const total_animals = eu_animals + state_animals;
-  const total_support = eu_support + state_support;
-
-  const total_animals_per_taxpayer = total_animals / taxpayers;
-  const total_support_per_taxpayer = total_support / taxpayers;
-
-  const pct_income_animals = income>0 ? (total_animals_per_taxpayer / income) * 100 : 0;
-  const pct_income_total = income>0 ? (total_support_per_taxpayer / income) * 100 : 0;
-
-  const out = document.getElementById('output');
-  out.hidden = false;
-  out.innerHTML = `
-    <h3>Resultat (baseret på 2024-tal)</h3>
-    <div class="kpi">
-      <div>
-        <strong>Samlet støtte (EU + stat)</strong>
-        <div class="muted">${formatDKK(total_support)}</div>
-      </div>
-      <div>
-        <strong>Animalsk produktion (est.)</strong>
-        <div class="muted">${formatDKK(total_animals)}</div>
-      </div>
-      <div>
-        <strong>Din andel</strong>
-        <div class="muted">${formatDKK(total_animals_per_taxpayer)} pr. skatteyder</div>
-      </div>
-    </div>
-
-    <p style="margin-top:10px">
-      <strong>Detaljer:</strong>
-      <ul>
-        <li>EU’s støtte: <strong>${formatDKK(eu_support)}</strong> – heraf animalsk produktion: <strong>${formatDKK(eu_animals)}</strong></li>
-        <li>Statslige udgifter og skattemæssige fordele: <strong>${formatDKK(state_support)}</strong> – heraf animalsk produktion (50 %): <strong>${formatDKK(state_animals)}</strong></li>
-        <li>Din andel af animalsk støtte: <strong>${formatDKK(total_animals_per_taxpayer)}</strong></li>
-        <li>Animalsk støtte som andel af din indkomst: <strong>${pct_income_animals.toFixed(3)} %</strong></li>
-        <li>Samlet støtte (alle sektorer) som andel af din indkomst: <strong>${pct_income_total.toFixed(3)} %</strong></li>
-      </ul>
-    </p>
-
-    <p class="muted"><em>Antagelser:</em> Alle beløb er i 2024-priser. Antal skatteydere: 4,6 mio.</p>
-  `;
-});
+    const out = document.getElementById('output');
+    out.hidden = false;
+    out.innerHTML = `
+      <h3>Resultat</h3>
+      <p>Samlet støtte, udgifter og skattelettelser til landbruget: <strong>${formatDKK(total_support)}</strong></p>
+      <p>Heraf til animalsk produktion (82 %): <strong>${formatDKK(animal_support)}</strong></p>
+      <p>Din andel af den samlede støtte: <strong>${formatDKK(support_per_taxpayer)}</strong></p>
+      <p>Heraf til animalsk produktion: <strong>${formatDKK(animal_support_per_taxpayer)}</strong>
+      (<strong>${pct_income.toFixed(3)} %</strong> af din årlige indkomst)</p>
+    `;
+  });
 </script>
 </body>
 </html>
