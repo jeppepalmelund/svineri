@@ -9,7 +9,7 @@
   .card { background: white; border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.08); padding: 18px; max-width: 800px; margin: 16px auto; }
   label { display:block; margin-top:12px; font-weight:600; }
   input[type=number] { width:100%; padding:8px; border:1px solid #e6e9ef; border-radius:8px; margin-top:6px; }
-  button { margin-top:14px; padding:10px 14px; border-radius:10px; border:0; background:#0ea5a4; color:white; font-weight:600; cursor:pointer; }
+  button { margin-top:10px; padding:10px 14px; border-radius:10px; border:0; background:#0ea5a4; color:white; font-weight:600; cursor:pointer; }
   .result { background:#f1f5f9; padding:12px; border-radius:8px; margin-top:12px; }
   .infobox { background:#ecfeff; border-left:4px solid #06b6d4; padding:12px 16px; border-radius:8px; margin-top:16px; }
   .sources { background:#f9fafb; padding:16px; border-radius:8px; margin-top:30px; font-size:0.95em; }
@@ -25,14 +25,12 @@
     <input id="income" type="number" value="500000" min="0" step="1000">
   </label>
 
+  <button id="calc">Beregn</button>
+
   <div class="infobox">
     <h3>Hvordan beregnes din andel?</h3>
     <p>Din andel beregnes ud fra den skat, du faktisk ville betale efter det danske skattesystem, inklusiv bundskat, kommuneskat, personfradrag og topskat. Beregneren fordeler støtte og miljøomkostninger proportionalt med din skat.</p>
   </div>
-
-  <button id="calc">Beregn</button>
-
-  <div id="output" class="result" aria-live="polite" hidden></div>
 
   <div class="infobox">
     <h3>Om lavere skattetryk og støtte</h3>
@@ -86,7 +84,6 @@ function beregnSkat(indkomst) {
 
 document.getElementById('calc').addEventListener('click', function() {
   const income = Number(document.getElementById('income').value) || 0;
-
   const taxPaid = beregnSkat(income);
 
   const direct_support = 7000000000;
