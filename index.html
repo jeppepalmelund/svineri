@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Landbrugsstøtte‑beregner</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f7fafc;color:#0f172a;padding:20px}
+  .card{background:white;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.08);padding:18px;max-width:700px;margin:16px auto}
+  label{display:block;margin-top:12px;font-weight:600}
+  input[type=number]{width:100%;padding:8px;border:1px solid #e6e9ef;border-radius:8px;margin-top:6px}
+  button{margin-top:14px;padding:10px 14px;border-radius:10px;border:0;background:#0ea5a4;color:white;font-weight:600;cursor:pointer}
+  .result{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:12px}
+  .infobox{background:#e0f2fe;border-left:4px solid #0ea5a4;padding:12px;margin-top:12px;border-radius:8px;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Landbrugsstøtte‑beregner</h1>
+    <p>Indtast din årlige indkomst før skat. Beregneren viser, hvor meget du indirekte betaler til landbrugsstøtte og statslige udgifter til landbruget.</p>
+
+    <label>Din årlige indkomst før skat (DKK)
+      <input id="income" type="number" value="500000" min="0" step="1000">
+    </label>
+
+    <button id="calc">Beregn</button>
+
+    <div id="output" class="result" aria-live="polite" hidden></div>
+
+    <div class="infobox">
+      <strong>Info:</strong> Landbruget nyder godt af lavere skattebyrde gennem forskellige skattefordele. Dette betyder, at svinebønder og andre landbrug typisk betaler mindre skat end almindelige lønmodtagere.
+    </div>
+
+    <p><small>Antagelser: Danmark har ca. 4,6 mio. skatteydere. Den samlede landbrugsstøtte på 7 mia. kr. dækker alle sektorer, hvoraf ca. 40 % tilskrives svineproduktion og foder. De statslige udgifter udover landbrugsstøtte anslås til 15 mia. kr.</small></p>
+  </div>
+
+<script>
+function formatDKK(n){
+  return n.toLocaleString('da-DK',{style:'currency',currency:'DKK',maximumFractionDigits:0});
+}
+
+document.getElementById('calc').addEventListener('click', ()=>{
+  const income = Number(document.getElementById('income').value)||0;
+
+  const total_subsidy = 7000000000; // Landbrugsstøtte 7 mia
+  const state_expenses = 15000000000; // Statslige udgifter 15 mia
+  const pig_share = 0.4; // 40 % til svineproduktion/foder
+  const taxpayers = 4600000; // ca. antal skatteydere
+
+  const pig_subsidy = total_subsidy * pig_share;
+  const subsidy_per_taxpayer = total_subsidy / taxpayers;
+  const pig_subsidy_per_taxpayer = pig_subsidy / taxpayers;
+
+  const state_expenses_per_taxpayer = state_expenses / taxpayers;
+  const total_cost_per_taxpayer = subsidy_per_taxpayer + state_expenses_per_taxpayer;
+
+  const pct_income_subsidy = income>0 ? (pig_subsidy_per_taxpayer/income)*100 : 0;
+  const pct_income_total = income>0 ? (total_cost_per_taxpayer/income)*100 : 0;
+
+  const out = document.getElementById('output');
+  out.hidden = false;
+  out.innerHTML = `
+    <h3>Resultat</h3>
+    <p>Samlet dansk landbrugsstøtte: <strong>${formatDKK(total_subsidy)}</strong></p>
+    <p>Andel til svineproduktion og foder (40 %): <strong>${formatDKK(pig_subsidy)}</strong></p>
+    <p>Din andel af landbrugsstøtten: <strong>${formatDKK(subsidy_per_taxpayer)}</strong></p>
+    <p>Heraf går til svineproduktion og foder: <strong>${formatDKK(pig_subsidy_per_taxpayer)}</strong> (<strong>${pct_income_subsidy.toFixed(3)} %</strong> af din indkomst)</p>
+    <p>Din andel af statslige udgifter udover støtte: <strong>${formatDKK(state_expenses_per_taxpayer)}</strong></p>
+    <p><strong>Samlet belastning (støtte + statslige udgifter): <strong>${formatDKK(total_cost_per_taxpayer)}</strong> (<strong>${pct_income_total.toFixed(3)} %</strong> af din indkomst)</p>
+  `;
+});
+</script>
+</body>
+</html>
